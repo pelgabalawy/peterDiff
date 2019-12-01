@@ -1,12 +1,30 @@
 import difflib
 from datetime import datetime
 
-def main():
-    diff_files("file1.txt", "file2.txt", context=False, report_name="peter_Test.html")
-    #diff_files("500k_test1.csv", "500k_test2.csv", context=False, report_name="peter_Test.html")
+#----------------------------------------------------------------------------------------------
+##sample run from command line:
+#-----------------------------
+#peterDiff(<file1> <file2> <context=True/False> <report_name=report.html> <logging=True/False>)
+#----------------------------------------------------------------------------------------------
+##Details:
+#--------
+#-file1: the first file to be compared
+#-file2: the second file to be compared
+#-context: True: Thre report will contains the similarites as well as the differences
+#         False(Default): The report will contain the differences only
+#-report_name: The name of the final html report
+#            Default: diff_report.html
+#-logging: True: every line being compared will be logging a line in the shell while the script is executing
+#         False: No logging will be showing in the shell while the script is executing
+#----------------------------------------------------------------------------------------------
+#This main function is for testing for now, until I make this project a command line tool
+# def main():
+#     diff_files("test1.txt", "test2.txt", context=False, report_name="peter_Test.html")
+#     #diff_files("500k_test1.csv", "500k_test2.csv", context=False, report_name="peter_Test.html")
+
 
 #this function will make the file diff and pass data to be written to report
-def diff_files(file1, file2, context=False, report_name="diff_report.html"):
+def diff_files(file1, file2, context=False, report_name="diff_report.html", logging=False):
     #the count starts at 1
     count = 1
     #setup the report file to start the diff
@@ -25,7 +43,8 @@ def diff_files(file1, file2, context=False, report_name="diff_report.html"):
                 status = "!="
             elif len(diff) == 1:
                 status = "=="
-            print("Line Number: " + str(count) + " is done!")
+            if logging:
+                print("Line Number: " + str(count) + " is done!")
             diff = color_words(diff)
             write_line_diff(report_name, count, diff[0], diff[1], status, context=context)
             count = count + 1
